@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.springbootmybatis.repository.PostMapper">
+    <select id="selectAllPosts" resultType="com.example.springbootmybatis.entity.Post">
+        select id, user_id, title, createAt
+        from posts
+        order by createAt desc
+    </select>
+    <select id="selectUserById" resultType="com.example.springbootmybatis.entity.Post" parameterType="string">
+        select user_id
+        from posts
+        where user_id=#{user_id}
+    </select>
+    <select id="selectPostById" resultType="com.example.springbootmybatis.entity.Post" parameterType="string">
+        select contents
+        from posts
+        where title=#{title}
+    </select>
+    <insert id="insertpost" parameterType="com.example.springbootmybatis.entity.Post">
+        insert into posts(user_id, title , contents,del_yn) values(#{user_id},#{title},#{contents},#{del_yn})
+    </insert>
+    <update id="updatePost" parameterType="com.example.springbootmybatis.entity.Post">
+        update posts set  contents=#{contents}  where title=#{title}
+    </update>
+    <update id="deletePost" parameterType="com.example.springbootmybatis.entity.Post">
+        update posts set  del_yn=1  where title=#{title}
+    </update>
+
+<!--    <delete id="deleteUser" parameterType="string">-->
+<!--        delete from users where id=#{id}-->
+<!--    </delete>-->
+</mapper>
