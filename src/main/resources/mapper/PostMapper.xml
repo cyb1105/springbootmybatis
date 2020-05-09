@@ -5,28 +5,23 @@
 
 <mapper namespace="com.example.springbootmybatis.repository.PostMapper">
     <select id="selectAllPosts" resultType="com.example.springbootmybatis.entity.Post">
-        select id, user_id, title, createAt
+        select id, user_id, title, contents, createAt, del_yn
         from posts
         order by createAt desc
     </select>
     <select id="selectUserById" resultType="com.example.springbootmybatis.entity.Post" parameterType="string">
-        select user_id
+        select user_id, title, contents, createAt
         from posts
         where user_id=#{user_id}
     </select>
-    <select id="selectPostById" resultType="com.example.springbootmybatis.entity.Post" parameterType="string">
-        select contents
-        from posts
-        where title=#{title}
-    </select>
-    <insert id="insertpost" parameterType="com.example.springbootmybatis.entity.Post">
-        insert into posts(user_id, title , contents,del_yn) values(#{user_id},#{title},#{contents},#{del_yn})
+    <insert id="insertPost" parameterType="com.example.springbootmybatis.entity.Post">
+        insert into posts(user_id, title , contents) values(#{user_id},#{title},#{contents})
     </insert>
-    <update id="updatePost" parameterType="com.example.springbootmybatis.entity.Post">
-        update posts set  contents=#{contents}  where title=#{title}
-    </update>
+<!--    <update id="updatePost" parameterType="com.example.springbootmybatis.entity.Post">-->
+<!--        update posts set  contents=#{contents}  where title=#{title}-->
+<!--    </update>-->
     <update id="deletePost" parameterType="com.example.springbootmybatis.entity.Post">
-        update posts set  del_yn=1  where title=#{title}
+        update posts set del_yn=1  where user_id=#{user_id}
     </update>
 
 <!--    <delete id="deleteUser" parameterType="string">-->
